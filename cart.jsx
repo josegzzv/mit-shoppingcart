@@ -176,13 +176,23 @@ const Products = (props) => {
   };
   const restockProducts = (url) => {
     doFetch(url);
-    let newItems = data.map((item) => {
-      let { name, country, cost, instock } = item;
-      console.log('Como llego el item:')
-      console.log(item);
-      return { name, country, cost, instock };
-    });
+    //console.log('Esto llegó del doFETCH');
+    //console.log(data.data);
+    let newItems = data.data.map((item)=>{
+      //console.log(item);
+      let {name, country, cost, instock} = item.attributes;
+      //console.log({name, country, cost, instock});
+      return {name, country, cost, instock};
+    })
+    //console.log(newItems);
     setItems([...items, ...newItems]);
+    // let newItems = data.map((item) => {
+    //   let { name, country, cost, instock } = item;
+    //   console.log('Como llego el item:')
+    //   console.log(item);
+    //   return { name, country, cost, instock };
+    // });
+    // setItems([...items, ...newItems]);
   };
 
   return (
@@ -206,7 +216,7 @@ const Products = (props) => {
         <form
           onSubmit={(event) => {
             console.log(`Start restock called on ${query}`);
-            restockProducts(`http://localhost:1337/api/products${query}`);
+            restockProducts(`${query}`);
             console.log(`End restock called on ${query}`);
             event.preventDefault();
           }}
